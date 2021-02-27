@@ -188,8 +188,8 @@ fn main() -> Result<(), std::io::Error> {
 
     outfile_writer.finish().unwrap();
 
-    println!("Total records: {}", count);
-    println!("Has cc img: {}", has_both);
+    // println!("Total records: {}", count);
+    // println!("Has cc img: {}", has_both);
 
     Ok(())
 }

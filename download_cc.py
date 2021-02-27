@@ -7,20 +7,36 @@ from tqdm import tqdm
 import sys
 import pathlib
 
-set_start_method("spawn")
 
 def process_wat(url, output_path):
     output_name = url.split("/")[-1].replace(".warc.wat.gz", ".jsonl.wat.gz")
     dir_name = url.split("/")[1]
 
     pathlib.Path(f"{output_path}/{dir_name}/").mkdir(parents=True, exist_ok=True)
-    subprocess.run(["./commoncrawl_filter", "http://commoncrawl.s3.amazonaws.com/" + url, f"{output_path}/{dir_name}/{output_name}".strip()], timeout=3600)
+
+    while True:
+        try:
+            subprocess.run(["./commoncrawl_filter", "http://commoncrawl.s3.amazonaws.com/" + url, f"{output_path}/{dir_name}/{output_name}".strip()], timeout=1200)
+            break
+        except:
+            pass
+
+    return url
 
 
-assert len(sys.argv) == 4
+if __name__=="__main__":
+    set_start_method("spawn")
 
-f = open(sys.argv[2])
-p = multiprocessing.Pool(int(sys.argv[1]))
-process = partial(process_wat, output_path=sys.argv[3])
+    assert len(sys.argv) == 4
 
-list(tqdm(p.imap_unordered(process, f)))
+    f = open(sys.argv[2])
+    total = len(f.readlines())
+    f.seek(0)
+
+    p = multiprocessing.Pool(int(sys.argv[1]))
+    process = partial(process_wat, output_path=sys.argv[3])
+
+    with open('progress.txt', 'a+') as o_f:
+        for i in tqdm(p.imap(process, f), total=total):
+            o_f.write(i)
+            o_f.flush()
