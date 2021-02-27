@@ -6,7 +6,7 @@ import zlib
 
 if __name__ == '__main__':
     
-    index_path = 'indexes_20200607105929'
+    index_path = 'indexes_1614468564'
 
     ret = []
     with open(index_path) as ind:
@@ -15,7 +15,8 @@ if __name__ == '__main__':
             
             data = zlib.decompress(response.content, zlib.MAX_WBITS|32)
             for warc in data.decode('utf-8').split('\n'):
-                ret.append(warc)
+                if warc.strip():
+                    ret.append(warc)
     
     with open(index_path + '_warc_urls.txt', 'w') as fh:
         fh.write('\n'.join(ret))

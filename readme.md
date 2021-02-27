@@ -22,5 +22,5 @@ python3 download_warc_urls.py
 # download and process everything
 # arugments are <threads> <url list> <output path>
 # e.g.
-python3 download_cc.py 8 indexes_20200607105929_warc_urls.txt out_dir
+python3 download_cc.py 8 indexes_1614468564_warc_urls.txt out_dir
 ```
