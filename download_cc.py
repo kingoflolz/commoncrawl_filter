@@ -9,6 +9,9 @@ import pathlib
 
 
 def process_wat(url, output_path):
+    if not url.strip():
+        return url
+
     output_name = url.split("/")[-1].replace(".warc.wat.gz", ".jsonl.wat.gz")
     dir_name = url.split("/")[1]
 
