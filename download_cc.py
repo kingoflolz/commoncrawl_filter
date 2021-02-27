@@ -12,14 +12,14 @@ def process_wat(url, output_path):
     if not url.strip():
         return url
 
-    output_name = url.split("/")[-1].replace(".warc.wat.gz", ".jsonl.wat.gz")
+    output_name = url.split("/")[3] + "_" + url.split("/")[-1].replace(".warc.wat.gz", ".jsonl.wat.gz")
     dir_name = url.split("/")[1]
 
     pathlib.Path(f"{output_path}/{dir_name}/").mkdir(parents=True, exist_ok=True)
 
     while True:
         try:
-            subprocess.run(["./commoncrawl_filter", "http://commoncrawl.s3.amazonaws.com/" + url, f"{output_path}/{dir_name}/{output_name}".strip()], timeout=1200)
+            subprocess.run(["./commoncrawl_filter", "http://commoncrawl.s3.amazonaws.com/" + url, f"{output_path}/{dir_name}/{output_name}".strip()], timeout=1200, check=True)
             break
         except:
             pass
