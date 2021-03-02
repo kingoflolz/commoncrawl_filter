@@ -33,8 +33,7 @@ impl Link{
             false
         };
 
-        let has_alt_img = self.url.is_some() && self.alt.is_some() && self.path.is_some() && self.path.as_ref().unwrap().find("@IMG").is_some();
-
+        let has_alt_img = self.url.is_some() && self.alt.is_some() && self.path.is_some() && self.path.as_ref().unwrap().find("IMG@").is_some();
         has_cc || has_alt_img
     }
 }
