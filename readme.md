@@ -1,3 +1,6 @@
+# Incorperated into cc_img_dl!
+See: https://github.com/kingoflolz/cc_img_dl
+
 # Common Crawl Filter
 
 Some quick and dirty code for downloading CC WAT files and parsing out images which are CC licensed, output format is 
